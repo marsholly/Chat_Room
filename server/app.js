@@ -1,5 +1,6 @@
 // CONSTANTS
 const PORT = process.env.PORT || 8000;
+const MONGO_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/Chatroomdb';
 
 // PACKAGE REQUIRES
 const http = require('http');
@@ -9,6 +10,15 @@ const morgan = require('morgan');
 const path = require('path');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config');
+const mongoose = require('mongoose');
+
+mongoose.Promise = Promise;
+
+// DB CONNECT
+require('mongoose').connect(MONGO_URI, (err) => {
+  if (err) throw new Error(err);
+  process.stdout.write(`MongoDB connected to ${MONGO_URI}`);
+});
 
 // APP DECLARATION
 const app = express();

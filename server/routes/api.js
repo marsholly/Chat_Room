@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = new express.Router();
 
-router.use('/bb', require('./bb'));
+router.use('/chatRooms', require('./chatRooms'));
+router.use('/messages', require('./messages'));
 
 module.exports = router;
