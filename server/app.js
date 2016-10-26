@@ -23,6 +23,7 @@ require('mongoose').connect(MONGO_URI, (err) => {
 // APP DECLARATION
 const app = express();
 const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 // WEBPACK CONFIG
 const compiler = webpack(webpackConfig);
@@ -36,6 +37,8 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+require('./config/socket')(app, io);
 
 // ROUTES
 app.use('/api', require('./routes/api'));

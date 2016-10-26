@@ -16,6 +16,15 @@ router.route('/')
       .catch(err => res.status(400).send(err));
   });
 
+router.get('/action/:message', (req, res) => {
+  const { message } = req.params;
+  req.io.emit('action', {
+    type: 'NEW_MESSAGE',
+    payload: { message },
+  });
+  res.send(message);
+});
+
 router.route('/:id')
   .get((req, res) => {
     Message.findById(req.params.id)
